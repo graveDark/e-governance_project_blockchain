@@ -5,7 +5,7 @@ A project on wed development with blockchain using python to make a e-governance
 Requirement:-
 1. Python 3.7+
 2. Django
-3. Misc. inbuilt packadges
+3. Misc. inbuilt packages
 
 Author:-
 Sayoni Santra
