@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        h1 {text-align: center;}
+        div {text-align: center;}
+        
+        .container {
+          height: 200px;
+          position: relative;
+        }
+        
+        .vertical-center {
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Register yourself</h1>
+    <form method="post" id="form" action="./register_submit">
+        {% csrf_token %}
+        <div>
+            <label for="uid">UID :</label>
+            <input type="text" id="uid" name="uid" required>
+        </div>
+        <br>
+        <div>
+            <label for="name">Name :</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <br>
+        <div>
+            <label for="add">Address :</label>
+            <input type="text" id="add" name="add" required>
+        </div>
+        <br>
+        <div>
+            <label for="phno">Ph No. :</label>
+            <input type="text" id="phno" name="phno" required>
+        </div>
+        <br>
+        <div>
+            <label for="taxamt">Tax Ammount :</label>
+            <input type="text" id="taxamt" name="taxamt" required>
+        </div>
+        <br>
+        <div>
+            <input type="submit" value="Create New User">
+        </div><br>
+        <div id="error" style="color:red;">
+        </div>
+        <div id="success" style="color:green;">
+        </div>
+    </form>
+    <script>
+        $('#form').on('submit', function(event){
+          event.preventDefault();
+          console.log("form submitted!")
+          var formData = new FormData(this);
+          $.ajax({
+            url: $('#form').attr('action'),
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            cache: false,
+            //dataType: 'html',
+            error: function(){
+                    console.log("Form cannot be submitted...");
+                },
+            cache: false,
+            success: function(result){
+              console.log(result);
+              $('#error').html("");
+              $('#success').html("");
+              if (result.error==1){
+                $('#error').html(result.info);
+              }else{
+                $('#success').html(result.info);
+              }
+            }
+          });
+        }); 
+    </script>
+</body>
+</html>

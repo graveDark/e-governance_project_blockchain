@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TAX PAYMENT</title>
+    <style>
+      h1 {text-align: center;}
+      div {text-align: center;}
+      
+      .container {
+        height: 200px;
+        position: relative;
+      }
+      
+      .vertical-center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+      </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Tax Payment</h1>
+<form method="post" id="form" action="./user_submit" name="form">
+    {% csrf_token %}
+  <div>
+    <label for="uid">UID :</label>
+    <input type="text" id="uid" name="uid" required>
+  </div><br>
+    <div>
+    <label for="name">Name :</label>
+    <input type="text" id="name" name="name" required>
+  </div><br>
+    <div>
+      <input type="submit" onclick="javascript: form.action='./user_submit';" id="submit1" name="submit1" value="Verify">
+    </div><br>
+    <div>
+      <input type="submit" onclick="javascript: form.action='./profile';" id="login" name="login" disabled value="Login"> 
+    </div><br>
+    <div id="error" style="color:red;">
+    </div>
+    <div id="success" style="color:green;">
+    </div>
+    <div>
+      <button onclick="window.location.href='./register'">Create a new account</button>
+    </div>
+
+    <!--
+    <br>
+  <div>
+    <label for="house no.">House No. :</label>
+    <input type="integer" id="house No." name="house No.">
+  </div>
+    <br>
+    <div>
+    <label for="Street">Street Name:</label>
+    <input type="text" id="street" name="street">
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="vertical center">
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+    -->
+</form>
+<script>
+  let myForm = document.getElementById('form');
+  $('#submit1').click(function(e) {
+    e.preventDefault();
+    console.log("form submitted!")
+    var formData = new FormData(myForm);
+    $.ajax({
+      url: $('#form').attr('action'),
+      type: "POST",
+      data: formData,
+      contentType: false,
+      processData: false,
+      cache: false,
+      //dataType: 'html',
+      error: function(){
+			  console.log("Form cannot be submitted...");
+		  },
+      cache: false,
+      success: function(result){
+        console.log(result);
+        $('#error').html("");
+        $('#success').html("");
+        $("#login").attr("disabled", true);
+        if (result.error==1){
+          $('#error').html(result.info);
+        }else{
+          $('#success').html(result.info);
+          $("#login").attr("disabled", false);
+        }
+      }
+    });
+  });
+  $("#login").click(function(event){
+    $('#form').submit();
+  }); 
+</script>
+</body>
+</html>
