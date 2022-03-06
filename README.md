@@ -1,5 +1,5 @@
 # E-Governance Project Using Blockchain
-A project on wed development with blockchain using python to make a e-governance website's transactional data more secure.
+A project on web development with blockchain using python to make a e-governance website's transactional data more secure.
 
 
 Requirement:-
